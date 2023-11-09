@@ -1,11 +1,17 @@
+import { User } from "src/users/user.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Association{
+    @PrimaryGeneratedColumn()
     id!: number;
-    idUsers: number[];
+    @OneToMany(() => User, User => User.id)
+    Users: User[];
+    @Column()
     name: string;
-    constructor(id:number, idUsers:number[], name:string){
+    constructor(id:number, idUsers:User[], name:string){
         this.id = id;
-        this.idUsers = idUsers;
+        this.Users = idUsers;
         this.name = name;
     }
 }
