@@ -1,7 +1,14 @@
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+
+@Entity()
 export class User{
-    lastname?: string;
-    firstname?: string;
+    @PrimaryGeneratedColumn()
     id!: number;
+    @Column()
+    lastname?: string;
+    @Column()
+    firstname?: string;
+    @Column()
     age: number
     constructor(id:number, ln:string, fn:string, age:number){
         this.id = id;
