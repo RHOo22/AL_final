@@ -5,7 +5,13 @@ import { UsersModule } from './users/users.module';
 import { AssociationsModule } from './associations/associations.module';
 
 @Module({
-  imports: [UsersModule, AssociationsModule],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'sqlite',
+      database: 'mydatabase.db',
+      entities: [],
+      synchronize: true,
+    }),UsersModule, AssociationsModule],
   controllers: [AppController],
   providers: [AppService],
 })
