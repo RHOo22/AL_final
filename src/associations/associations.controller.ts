@@ -33,10 +33,10 @@ export class AssociationsController {
     }
 
     @Get(':id/members')
-    getMembers(@Param() parameter): User[] {
+    async getMembers(@Param() parameter): Promise<User[]> {
         const UserMembers = this.service.getMembers(+parameter.id)
         if(UserMembers===undefined) throw new HttpException('association introuvable',HttpStatus.NOT_FOUND)
-        return UserMembers
+        return await UserMembers
     }
 
     @Put(':id')

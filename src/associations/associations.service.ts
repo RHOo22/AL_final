@@ -28,15 +28,9 @@ export class AssociationsService {
         return await this.repository.findOne({where: {id: Equal(id)}})
     }
 
-    getMembers(id: number): User[] {
-        const idUsers= this.getid(id).Users
-        if (idUsers !== undefined){
-            const users : User[] = []
-            idUsers.forEach(idUser => users.push(this.Userservice.getid(idUser)));
-            return users
+    async getMembers(id: number): Promise<User[]> {
+        return (await this.getid(id)).Users
         }
-        return undefined
-    }
 
     async put(id:number,Users:User[],name:string):Promise<Association>{
         const association = await this.repository.findOne({where: {id: Equal(id)}})
