@@ -43,11 +43,6 @@ export class UsersService {
     }
 
     async delete(id:number):Promise<Boolean>{
-        const user = await  this.repository.findOne({where: {id: Equal(id)}});
-        if (user !== undefined){
-            await this.repository.delete(id)
-            return true
-        }
-        return false
+        return (await this.repository.delete(id)).affected !== 0
     }
 }
