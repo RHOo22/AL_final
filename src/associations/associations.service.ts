@@ -2,39 +2,34 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Association } from './association.entity';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { DeleteResult, Equal, Repository } from 'typeorm';
 
-const associations: Association[] = [
-    {
-        id: 0,
-        idUsers: [],
-        name: 'alela'
-    }
-]
 
 @Injectable()
 export class AssociationsService {
 
     constructor(
-        private Userservice: UsersService
+        @InjectRepository(Association)
+    private repository: Repository<Association>
     ) {}
 
-    create(idUsers: number[], name: string): Association {
-        const association = new Association(associations.length, idUsers, name);
-        associations.push(association)
+    async create(Users: User[], name: string): Promise<Association> {
+        const association = new Association(await this.repository.count(), Users, name);
+        this.repository.save(association)
         return association
     }
 
-    get() : Association[]{
-        return associations
+    async get() : Promise<Repository<Association>>{
+         return this.repository
     }
 
-    getid(id:number):Association{
-        const association = associations.filter((associations) => id === associations.id)[0];
-        return association
+    async getid(id:number):Promise<Association>{
+        return await this.repository.findOne({where: {id: Equal(id)}})
     }
 
     getMembers(id: number): User[] {
-        const idUsers= this.getid(id).idUsers
+        const idUsers= this.getid(id).Users
         if (idUsers !== undefined){
             const users : User[] = []
             idUsers.forEach(idUser => users.push(this.Userservice.getid(idUser)));
@@ -43,11 +38,11 @@ export class AssociationsService {
         return undefined
     }
 
-    put(id:number,idUsers:number[],name:string):Association{
-        const association = associations.filter((associations) => id === associations.id)[0];
+    async put(id:number,Users:User[],name:string):Promise<Association>{
+        const association = await this.repository.findOne({where: {id: Equal(id)}})
         if ( association !== undefined){
-            if (idUsers !== undefined){
-                association.idUsers = idUsers
+            if (Users !== undefined){
+                association.Users = Users
             }
             if (name !== undefined){
                 association.name = name
@@ -56,14 +51,7 @@ export class AssociationsService {
         return association
     }
 
-    delete(id:number):Boolean{
-        const association = associations.filter((associations) => id === associations.id)[0];
-        if (association !== undefined){
-            associations.splice(associations.indexOf(association),1);
-            return true
-        }
-        else {
-            return false
-        }
+    async delete(id:number):Promise<Boolean>{
+        return (await this.repository.delete(id)).affected!==0
     }
 }

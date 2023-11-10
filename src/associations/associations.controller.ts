@@ -2,6 +2,7 @@ import { Controller, Body, Post, Get, Param, Put, Delete, HttpException, HttpSta
 import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
+import { Repository } from 'typeorm';
 
 
 @Controller('associations')
@@ -12,23 +13,23 @@ export class AssociationsController {
     ) {}
 
     @Post()
-    create(@Body() input: any): Association {
+    async create(@Body() input: any): Promise<Association> {
         if (input.idUsers === undefined || input.name === undefined ) {
             throw new HttpException('donnée manquante',HttpStatus.NOT_FOUND)
         }
-        return this.service.create(input.idUsers, input.name);
+        return await this.service.create(input.idUsers, input.name);
     }
 
     @Get()
-    get(): Association[]{
-        return this.service.get();
+    async get(): Promise<Repository<Association>>{
+        return await this.service.get();
     }
 
     @Get(':id')
-    getid(@Param() parameter): Association{
+    async getid(@Param() parameter): Promise<Association>{
         const association = this.service.getid(+parameter.id)
         if (association === undefined) throw new HttpException('association introuvable',HttpStatus.NOT_FOUND)
-        return association
+        return await association
     }
 
     @Get(':id/members')
@@ -39,16 +40,16 @@ export class AssociationsController {
     }
 
     @Put(':id')
-    put(@Param() parameter,@Body() input: any): Association{
+    async put(@Param() parameter,@Body() input: any): Promise<Association>{
         const association = this.service.put(+parameter.id,input.idUsers,input.name)
         if (association === undefined) throw new HttpException('association introuvable',HttpStatus.NOT_FOUND)
-        return association;
+        return await association;
     }
 
     @Delete(':id')
-    delete(@Param() parameter):boolean{
+    async delete(@Param() parameter):Promise<boolean>{
         const bool = this.service.delete(+parameter.id)
-        if (bool === false) throw new HttpException('association introuvable',HttpStatus.NOT_FOUND)
+        if (await bool === false) throw new HttpException('association introuvable',HttpStatus.NOT_FOUND)
         return true
     }
 
