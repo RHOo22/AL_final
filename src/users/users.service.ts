@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Equal, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
@@ -11,23 +11,23 @@ export class UsersService {
     private repository: Repository<User>
     ) {}
 
-    create(lastname: string, firstname: string, age: number): User {
-        const user = new User(User.length, lastname, firstname, age);
+    async create(lastname: string, firstname: string, age: number): Promise<User> {
+        const user = new User(await this.repository.count(), lastname, firstname, age);
         this.repository.save(user)
         return user
     }
 
-    get() : Repository<User>{
-        return this.repository
+    async get() : Promise<Repository<User>>{
+        return await this.repository
     }
 
-    getid(id:number):User{
-        const user = users.filter((users) => id === users.id)[0];
+    async getid(id:number): Promise<User> {
+        const user = await  this.repository.findOne({where: {id: Equal(id)}});
         return user
     }
 
-    put(id:number,firstname:string,lastname:string,age:number):User{
-        const user = users.filter((users) => id === users.id)[0];
+    async put(id:number,firstname:string,lastname:string,age:number):Promise<User>{
+        const user = await  this.repository.findOne({where: {id: Equal(id)}});
         if ( user !== undefined){
             if (firstname !== undefined){
                 user.firstname = firstname
@@ -42,14 +42,12 @@ export class UsersService {
         return user
     }
 
-    delete(id:number):Boolean{
-        const user = users.filter((users) => id === users.id)[0];
+    async delete(id:number):Promise<Boolean>{
+        const user = await  this.repository.findOne({where: {id: Equal(id)}});
         if (user !== undefined){
-            users.splice(users.indexOf(user),1);
+            await this.repository.delete(id)
             return true
         }
-        else {
-            return false
-        }
+        return false
     }
 }
