@@ -29,7 +29,11 @@ export class AssociationsService {
     }
 
     async getMembers(id: number): Promise<User[]> {
-        return (await this.getid(id)).Users
+        const asso = await this.getid(id)
+        if (asso==undefined){
+            return undefined;
+        }
+        return asso.Users
         }
 
     async put(id:number,Users:User[],name:string):Promise<Association>{
