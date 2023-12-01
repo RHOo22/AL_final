@@ -3,17 +3,20 @@ import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
 import { Repository } from 'typeorm';
+import { AssociationsInput } from './associations.input';
+import { ApiTags } from '@nestjs/swagger';
 
-
+@ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
+
 
     constructor(
         private service: AssociationsService
     ) {}
 
     @Post()
-    async create(@Body() input: any): Promise<Association> {
+    async create(@Body() input: AssociationsInput): Promise<Association> {
         if (input.idUsers === undefined || input.name === undefined ) {
             throw new HttpException('donnée manquante',HttpStatus.NOT_FOUND)
         }

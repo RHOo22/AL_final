@@ -1,9 +1,11 @@
 import { Controller, Body, Post, Get, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { Repository } from 'typeorm';
+import { ApiTags } from '@nestjs/swagger';
+import { UserInput } from './user.input';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
 
@@ -13,7 +15,7 @@ export class UsersController {
 
 
     @Post()
-    async create(@Body() input: any): Promise<User> {
+    async create(@Body() input: UserInput): Promise<User> {
         if (input.lastname === undefined || input.firstname === undefined || input.age === undefined) {
             throw new HttpException('donnée manquante',HttpStatus.NOT_FOUND)
         }

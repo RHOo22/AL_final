@@ -11,10 +11,13 @@ export class AssociationsService {
 
     constructor(
         @InjectRepository(Association)
-    private repository: Repository<Association>
+    private repository: Repository<Association>,
+    private userservice: UsersService
     ) {}
 
-    async create(Users: User[], name: string): Promise<Association> {
+    async create(idUsers: number[], name: string): Promise<Association> {
+        let Users: User[];
+        idUsers.forEach(async element => {Users.push(await this.userservice.getid(element))});
         const association = new Association(await this.repository.count(), Users, name);
         this.repository.save(association)
         return association
