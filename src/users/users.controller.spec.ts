@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { User } from './user.entity';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
+import { UserInput } from './user.input';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export type MockType<T> = {
   [P in keyof T]?: jest.Mock<{}>;
@@ -60,6 +62,23 @@ describe('UsersController', () => {
       });
       expect(await controller.getid({id: 0})).toBe(expected[0]);
     })
+  });
+
+  describe('create', () => {
+    it('create user', async () => {
+      const expected = await Promise.all([{ 
+        id: 0, 
+        firstname: 'John',
+        lastname: 'Doe',
+        age: 23
+    }]);
+      jest.spyOn(service, 'create').mockImplementation((lastname, firstname,age) => {
+        expected.push({id:1,firstname:lastname,lastname:firstname,age:age});
+        return Promise.resolve({id:1,firstname:lastname,lastname:firstname,age:age});
+      });
+      expect(await controller.create({lastname:'Pierre',firstname:'Doe',age:23})).toStrictEqual({id:1,firstname:'Pierre',lastname:'Doe',age:23});
+      expect(async () => {await controller.create({lastname:undefined,firstname:'Doe',age:23})}).rejects.toThrowError(HttpException);
+    });
   });
 
 });
