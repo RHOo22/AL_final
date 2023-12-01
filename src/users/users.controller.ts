@@ -1,6 +1,5 @@
 import { Controller, Body, Post, Get, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from './user.entity';
-import { AnyFilesInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 
 @Controller('users')
