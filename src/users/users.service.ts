@@ -11,8 +11,8 @@ export class UsersService {
     private repository: Repository<User>
     ) {}
 
-    async create(lastname: string, firstname: string, age: number): Promise<User> {
-        const user = new User(await this.repository.count(), lastname, firstname, age);
+    async create(lastname: string, firstname: string, age: number, password:string): Promise<User> {
+        const user = new User(await this.repository.count(), lastname, firstname, age, password);
         this.repository.save(user)
         return user
     }

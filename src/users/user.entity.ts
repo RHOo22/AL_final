@@ -6,16 +6,19 @@ export class User{
     @PrimaryGeneratedColumn()
     id!: number;
     @Column()
-    lastname?: string;
+    lastname: string;
     @Column()
-    firstname?: string;
+    firstname: string;
     @Column()
     age: number
-    constructor(id:number, ln:string, fn:string, age:number){
+    @Column()
+    password: string;
+    constructor(id:number, ln:string, fn:string, age:number, pw:string){
         this.id = id;
         this.lastname = ln;
         this.firstname = fn;
         this.age = age;
+        this.password = pw; 
     }
 }
 

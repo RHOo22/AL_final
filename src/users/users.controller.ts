@@ -16,10 +16,10 @@ export class UsersController {
 
     @Post()
     async create(@Body() input: UserInput): Promise<User> {
-        if (input.lastname === undefined || input.firstname === undefined || input.age === undefined) {
+        if (input.lastname === undefined || input.firstname === undefined || input.age === undefined || input.password === undefined) {
             throw new HttpException('donnée manquante',HttpStatus.NOT_FOUND)
         }
-        return this.service.create(input.lastname, input.firstname, input.age);
+        return this.service.create(input.lastname, input.firstname, input.age, input.password);
     }
 
     @Get()
