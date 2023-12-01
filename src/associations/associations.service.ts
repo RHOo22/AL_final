@@ -10,10 +10,13 @@ import { DeleteResult, Equal, Repository } from 'typeorm';
 export class AssociationsService {
 
     constructor(
+    
         @InjectRepository(Association)
-    private repository: Repository<Association>,
+    private repository: Repository<Association>,   
     private userservice: UsersService
     ) {}
+    
+
 
     async create(idUsers: number[], name: string): Promise<Association> {
         let Users: User[];
@@ -23,8 +26,8 @@ export class AssociationsService {
         return association
     }
 
-    async get() : Promise<Repository<Association>>{
-         return this.repository
+    async get() : Promise<Association[]>{
+         return this.repository.find()
     }
 
     async getid(id:number):Promise<Association>{

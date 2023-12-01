@@ -17,8 +17,8 @@ export class UsersService {
         return user
     }
 
-    async get() : Promise<Repository<User>>{
-        return await this.repository
+    async get() : Promise<User[]>{
+        return await this.repository.find();
     }
 
     async getid(id:number): Promise<User> {

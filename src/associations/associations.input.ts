@@ -9,9 +9,7 @@ export class AssociationsInput {
     public idUsers: number[];
 
     @ApiProperty({
-        description: 'The age of the user',
-        minimum: 18,
-        default: 18,
+        description: 'The name of the association',
         type: String,
     })
     public name: string;

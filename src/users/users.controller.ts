@@ -23,7 +23,7 @@ export class UsersController {
     }
 
     @Get()
-    async get(): Promise<Repository<User>>{
+    async get(): Promise<User[]>{
         return this.service.get();
     }
 

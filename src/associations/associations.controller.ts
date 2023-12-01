@@ -24,7 +24,7 @@ export class AssociationsController {
     }
 
     @Get()
-    async get(): Promise<Repository<Association>>{
+    async get(): Promise<Association[]>{
         return await this.service.get();
     }
 
