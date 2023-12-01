@@ -1,9 +1,10 @@
-import { Controller, Body, Post, Get, Param, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Body, Post, Get, Param, Put, Delete, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { Repository } from 'typeorm';
 import { ApiTags } from '@nestjs/swagger';
 import { UserInput } from './user.input';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
 @Controller('users')
@@ -23,6 +24,7 @@ export class UsersController {
     }
 
     @Get()
+    @UseGuards(AuthGuard('jwt'))
     async get(): Promise<User[]>{
         return this.service.get();
     }
