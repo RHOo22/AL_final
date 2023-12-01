@@ -42,7 +42,8 @@ describe('UsersController', () => {
           id: 0, 
           firstname: 'John',
           lastname: 'Doe',
-          age: 23
+          age: 23 ,
+          password : 'password'
       }]);
       jest.spyOn(service, 'get').mockImplementation(() => expected);
       expect(await controller.get()).toBe(await expected);
@@ -55,7 +56,8 @@ describe('UsersController', () => {
           id: 0, 
           firstname: 'John',
           lastname: 'Doe',
-          age: 23
+          age: 23 ,
+          password : 'password'
       }]);
       jest.spyOn(service, 'getid').mockImplementation(id => {
         return Promise.resolve(expected[id]);
@@ -70,14 +72,15 @@ describe('UsersController', () => {
         id: 0, 
         firstname: 'John',
         lastname: 'Doe',
-        age: 23
+        age: 23 ,
+        password : 'password'
     }]);
-      jest.spyOn(service, 'create').mockImplementation((lastname, firstname,age) => {
-        expected.push({id:1,firstname:lastname,lastname:firstname,age:age});
-        return Promise.resolve({id:1,firstname:lastname,lastname:firstname,age:age});
+      jest.spyOn(service, 'create').mockImplementation((lastname, firstname,age,password) => {
+        expected.push({id:1,firstname:lastname,lastname:firstname,age:age,password:password});
+        return Promise.resolve({id:1,firstname:lastname,lastname:firstname,age:age,password:password});
       });
-      expect(await controller.create({lastname:'Pierre',firstname:'Doe',age:23})).toStrictEqual({id:1,firstname:'Pierre',lastname:'Doe',age:23});
-      expect(async () => {await controller.create({lastname:undefined,firstname:'Doe',age:23})}).rejects.toThrowError(HttpException);
+      expect(await controller.create({lastname:'Pierre',firstname:'Doe',age:23,password:'password'})).toStrictEqual({id:1,firstname:'Pierre',lastname:'Doe',age:23,password:'password'});
+      expect(async () => {await controller.create({lastname:undefined,firstname:'Doe',age:23,password:'password'})}).rejects.toThrowError(HttpException);
     });
   });
 
