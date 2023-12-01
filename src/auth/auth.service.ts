@@ -10,8 +10,7 @@ export class AuthService {
     ) {}
 
     public async validateUser(id: number, password: string) : Promise<User> {
-        let user: User;
-        user= await this.userservice.getid(id);
+        let user: User = await this.userservice.getid(id);
         if(user===undefined || user.password!=password){return undefined}
         else{return user}
     }

@@ -12,9 +12,8 @@ export class UsersService {
     ) {}
 
     async create(lastname: string, firstname: string, age: number, password:string): Promise<User> {
-        const user = new User(await this.repository.count(), lastname, firstname, age, password);
-        this.repository.save(user)
-        return user
+        const user ={lastname, firstname, age, password};
+        return this.repository.save(user)
     }
 
     async get() : Promise<User[]>{
