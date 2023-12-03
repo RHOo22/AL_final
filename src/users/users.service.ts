@@ -1,35 +1,35 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './user.entity';
-
-const users : User[] = [
-    {
-        id: 0,
-        lastname: 'Doe',
-        firstname: 'John',
-        age: 23
-    }
-]
+import { InjectRepository } from '@nestjs/typeorm';
+import { Equal, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
 
-    create(lastname: string, firstname: string, age: number): User {
-        const user = new User(users.length, lastname, firstname, age);
-        users.push(user)
+    constructor(
+    @InjectRepository(User)
+    private repository: Repository<User>
+    ) {
+        this.create("Doe","John",23,"password")
+    }
+
+    async create(lastname: string, firstname: string, age: number, password:string): Promise<User> {
+        const hash = await bcrypt.hash(password, 10);
+        return this.repository.save(this.repository.create({lastname, firstname, age, password : hash}))
+    }
+
+    async get() : Promise<User[]>{
+        return await this.repository.find();
+    }
+
+    async getid(id:number): Promise<User> {
+        const user = await  this.repository.findOne({where: {id: Equal(id)}});
         return user
     }
 
-    get() : User[]{
-        return users
-    }
-
-    getid(id:number):User{
-        const user = users.filter((users) => id === users.id)[0];
-        return user
-    }
-
-    put(id:number,firstname:string,lastname:string,age:number):User{
-        const user = users.filter((users) => id === users.id)[0];
+    async put(id:number,firstname:string,lastname:string,age:number):Promise<User>{
+        const user = await  this.repository.findOne({where: {id: Equal(id)}});
         if ( user !== undefined){
             if (firstname !== undefined){
                 user.firstname = firstname
@@ -44,14 +44,7 @@ export class UsersService {
         return user
     }
 
-    delete(id:number):Boolean{
-        const user = users.filter((users) => id === users.id)[0];
-        if (user !== undefined){
-            users.splice(users.indexOf(user),1);
-            return true
-        }
-        else {
-            return false
-        }
+    async delete(id:number):Promise<Boolean>{
+        return (await this.repository.delete(id)).affected !== 0
     }
 }

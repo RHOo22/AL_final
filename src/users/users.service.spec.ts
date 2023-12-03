@@ -53,7 +53,8 @@ describe('UsersController', () => {
           id: 0, 
           firstname: 'John',
           lastname: 'Doe',
-          age: 23
+          age: 23 ,
+          password : 'password'
       }]);
       jest.spyOn(service, 'getid').mockImplementation(id => {
         return Promise.resolve(expected[id]);
