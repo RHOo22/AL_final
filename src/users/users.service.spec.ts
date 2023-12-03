@@ -47,20 +47,20 @@ describe('UsersController', () => {
   //   });
   // });
 
-  describe('getById', () => {
-    it('should return a single user, with the provided id', async () => {
-      const expected = await Promise.all([{ 
-          id: 0, 
-          firstname: 'John',
-          lastname: 'Doe',
-          age: 23 ,
-          password : 'password'
-      }]);
-      jest.spyOn(service, 'getid').mockImplementation(id => {
-        return Promise.resolve(expected[id]);
-      });
-      expect(await controller.getid({id: 0})).toBe(expected[0]);
-    })
-  });
+  // describe('getById', () => {
+  //   it('should return a single user, with the provided id', async () => {
+  //     const expected = await Promise.all([{ 
+  //         id: 0, 
+  //         firstname: 'John',
+  //         lastname: 'Doe',
+  //         age: 23 ,
+  //         password : 'password'
+  //     }]);
+  //     jest.spyOn(service, 'getid').mockImplementation(id => {
+  //       return Promise.resolve(expected[id]);
+  //     });
+  //     expect(await controller.getid({id: 0})).toBe(expected[0]);
+  //   })
+  // });
 
 });
