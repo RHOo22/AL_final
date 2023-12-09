@@ -20,7 +20,7 @@ export class AssociationsController {
         if (input.idUsers === undefined || input.name === undefined ) {
             throw new HttpException('donnée manquante',HttpStatus.NOT_FOUND)
         }
-        return await this.service.create(input.idUsers, input.name);
+        return await this.service.create(input.idUsers.map(Number), input.name);
     }
 
     @Get()

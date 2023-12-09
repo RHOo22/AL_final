@@ -1,20 +1,17 @@
+import { Role } from "src/roles/roles/role.entity";
 import { User } from "src/users/user.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
 export class Association{
     @PrimaryGeneratedColumn()
-    id!: number;
-    @OneToMany(() => User, User => User.id)
+    id :number;
+    @ManyToMany(() => User, User => User.id)
+    @JoinTable()
     Users: User[];
     @Column()
     name: string;
-    constructor(id:number, idUsers:User[], name:string){
-        this.id = id;
-        this.Users = idUsers;
-        this.name = name;
-    }
 }
 
 

@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "src/roles/roles/role.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
 export class User{
     @PrimaryGeneratedColumn()
-    id!: number;
+    id: number;
     @Column()
     lastname: string;
     @Column()
@@ -13,12 +14,5 @@ export class User{
     age: number
     @Column()
     password: string;
-    constructor(id:number, ln:string, fn:string, age:number, pw:string){
-        this.id = id;
-        this.lastname = ln;
-        this.firstname = fn;
-        this.age = age;
-        this.password = pw; 
-    }
 }
 

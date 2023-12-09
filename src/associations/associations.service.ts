@@ -10,20 +10,18 @@ import { DeleteResult, Equal, Repository } from 'typeorm';
 export class AssociationsService {
 
     constructor(
-    
         @InjectRepository(Association)
     private repository: Repository<Association>,   
     private userservice: UsersService
     ) {}
-    
-
 
     async create(idUsers: number[], name: string): Promise<Association> {
-        let Users: User[];
-        idUsers.forEach(async element => {Users.push(await this.userservice.getid(element))});
-        const association = new Association(await this.repository.count(), Users, name);
-        this.repository.save(association)
-        return association
+        let assoc : Association = this.repository.create({name});
+        assoc.Users = (await this.userservice.get()).filter(user => idUsers.indexOf(user.id) >= 0);
+        // let Users: User[] ;
+        // idUsers.forEach(async element => {Users.push(await this.userservice.getid(element))});
+        // return this.repository.save(this.repository.create({Users,name}))
+        return this.repository.save(assoc);
     }
 
     async get() : Promise<Association[]>{
@@ -31,7 +29,9 @@ export class AssociationsService {
     }
 
     async getid(id:number):Promise<Association>{
-        return await this.repository.findOne({where: {id: Equal(id)}})
+        const association = await this.repository.findOne({where: {id: Equal(id)}});
+        if (association === null){return undefined};
+        return association;
     }
 
     async getMembers(id: number): Promise<User[]> {

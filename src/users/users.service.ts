@@ -11,7 +11,7 @@ export class UsersService {
     @InjectRepository(User)
     private repository: Repository<User>
     ) {
-        this.create("Doe","John",23,"password")
+        //this.create("Doe","John",23,"password")
     }
 
     async create(lastname: string, firstname: string, age: number, password:string): Promise<User> {
@@ -25,6 +25,7 @@ export class UsersService {
 
     async getid(id:number): Promise<User> {
         const user = await  this.repository.findOne({where: {id: Equal(id)}});
+        if (user === null){return undefined};
         return user
     }
 
