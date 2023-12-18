@@ -21,7 +21,7 @@ let AuthService = class AuthService {
     }
     async validateUser(id, password) {
         let user = await this.userservice.getid(id);
-        if (user === undefined || !bcrypt.compare(password, user.password)) {
+        if (user === undefined || !bcrypt.compareSync(password, user.password)) {
             return undefined;
         }
         else {

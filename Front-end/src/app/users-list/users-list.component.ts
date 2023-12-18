@@ -1,4 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -7,25 +9,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './users-list.component.css'
 })
 export class UsersListComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+
   displayedColumns: string[] = ['id', 'lastname', 'firstname', 'age'];
-  dataSource = users;
-  
+  dataSource = [];
 
-}
-
-export class User {
   constructor(
-    public id: number,
-    public password: string,
-    public lastname: string,
-    public firstname: string,
-    public age: number
-  ) {}
+    private http: HttpClient
+
+    ) {}
+
+
+
+  ngOnInit(): void {
+    const request: Observable<any> = this.http.get('http://localhost:3000/users', { observe: 'response' });
+    request.subscribe({ next : (response) => this.dataSource = response.body });
+  }
+
 }
-const users: User[] = [
-  new User(0, 'mdp1', 'Doe', 'John', 23),
-  new User(1, 'mdp2', 'Doe', 'Jane', 32)
-]
+
