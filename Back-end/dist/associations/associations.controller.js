@@ -28,7 +28,7 @@ let AssociationsController = class AssociationsController {
         return await this.service.create(input.idUsers.map(Number), input.name);
     }
     async get() {
-        return await this.service.get();
+        return this.service.get();
     }
     async getid(parameter) {
         const association = this.service.getid(+parameter.id);

@@ -25,7 +25,7 @@ export class AssociationsService {
     }
 
     async get() : Promise<Association[]>{
-         return this.repository.find()
+         return await this.repository.find()
     }
 
     async getid(id:number):Promise<Association>{

@@ -21,8 +21,14 @@ export class NavComponent {
   logout(): void {
     this.tokenStorageService.clear();
     this.router.navigateByUrl("/login");
-
   }
 
+  user(): void {
+    this.router.navigateByUrl("/users");
+  }
+
+  association(): void {
+    this.router.navigateByUrl("/associations");
+  }
 
 }

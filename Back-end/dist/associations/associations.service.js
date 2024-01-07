@@ -29,7 +29,7 @@ let AssociationsService = class AssociationsService {
         return this.repository.save(assoc);
     }
     async get() {
-        return this.repository.find();
+        return await this.repository.find();
     }
     async getid(id) {
         const association = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });

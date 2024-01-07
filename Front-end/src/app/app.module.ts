@@ -12,13 +12,17 @@ import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { TokenHttpInterceptor } from './interceptors/token.interceptor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
+import { AssociationsListComponent } from './associations-list/associations-list.component';
+import { UserDetailsComponent } from './user-details/user-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UsersListComponent,
     LoginComponent,
-    NavComponent
+    NavComponent,
+    AssociationsListComponent,
+    UserDetailsComponent,
   ],
   imports: [
     BrowserModule,
