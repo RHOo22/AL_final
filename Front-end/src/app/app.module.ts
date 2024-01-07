@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
 import { AssociationsListComponent } from './associations-list/associations-list.component';
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { AssociationsDetailsComponent } from './associations-details/associations-details.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
     NavComponent,
     AssociationsListComponent,
     UserDetailsComponent,
+    AssociationsDetailsComponent,
   ],
   imports: [
     BrowserModule,

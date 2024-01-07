@@ -5,7 +5,9 @@
 
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> id </th>
-      <td mat-cell *matCellDef="let association"> {{association.id}} </td>
+      <td mat-cell *matCellDef="let association"> 
+        <a [routerLink]="['/associations', association.id]">{{association.id}} </a>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="Users">
