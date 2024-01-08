@@ -13,7 +13,9 @@ export class AssociationsService {
         @InjectRepository(Association)
     private repository: Repository<Association>,   
     private userservice: UsersService
-    ) {}
+    ) {
+        //this.create([1,2],"assoc2")
+    }
 
     async create(idUsers: number[], name: string): Promise<Association> {
         let assoc : Association = this.repository.create({name});
@@ -25,11 +27,11 @@ export class AssociationsService {
     }
 
     async get() : Promise<Association[]>{
-         return await this.repository.find()
+         return await this.repository.find({ relations: ['Users'] })
     }
 
     async getid(id:number):Promise<Association>{
-        const association = await this.repository.findOne({where: {id: Equal(id)}});
+        const association = await this.repository.findOne({where: {id: Equal(id)} ,relations: ['Users'] });
         if (association === null){return undefined};
         return association;
     }

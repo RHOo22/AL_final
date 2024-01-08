@@ -31,7 +31,8 @@ export class UserDetailsComponent {
   }
 
   isCurrentUserInAssociation(Id: string): boolean {
-    return Id === this.userId;
+    console.log('-' + typeof Id.toString + '-' + typeof this.userId.toString + '-' + (Id.toString === this.userId.toString))
+    return Id.toString() === this.userId.toString();
   }
 
 }

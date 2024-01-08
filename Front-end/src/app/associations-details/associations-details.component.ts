@@ -35,14 +35,3 @@ export class AssociationsDetailsComponent {
   }
   
 }
-// @PrimaryGeneratedColumn()
-// id : Minute;
-// @Column()
-// content: string;
-// @ManyToMany(() => User, User => User.id)
-// @JoinTable()
-// idVoters: number[];
-// @Column()
-// date: string;
-// @Column()
-// idAssociation: number;

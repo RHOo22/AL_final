@@ -29,10 +29,10 @@ let AssociationsService = class AssociationsService {
         return this.repository.save(assoc);
     }
     async get() {
-        return await this.repository.find();
+        return await this.repository.find({ relations: ['Users'] });
     }
     async getid(id) {
-        const association = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });
+        const association = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) }, relations: ['Users'] });
         if (association === null) {
             return undefined;
         }

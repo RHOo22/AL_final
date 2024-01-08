@@ -22,7 +22,9 @@ export class AssociationsListComponent implements OnInit {
 
   ngOnInit(): void {
     const request: Observable<any> = this.http.get('http://localhost:3000/associations', { observe: 'response' });
-    request.subscribe({ next : (response) => this.dataSource = response.body });
+    request.subscribe({ next : (response) => {
+      this.dataSource = response.body
+    }});
   }
 
 }
