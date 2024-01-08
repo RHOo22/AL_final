@@ -41,6 +41,13 @@ export class MinutesController {
         return await UserVoters
     }
 
+    @Get('/association/:id')
+    async getAssoc(@Param() parameter): Promise<Minute[]> {
+        const UserVoters = this.service.getAssoc(+parameter.id)
+        if(UserVoters===undefined) throw new HttpException('minute introuvable',HttpStatus.NOT_FOUND)
+        return await UserVoters
+    }
+
     @Put(':id')
     async put(@Param() parameter,@Body() input: MinuteUpdate): Promise<Minute>{
         const minute = this.service.put(+parameter.id,input.content,input.idVoters,input.date,input.idAssociation)

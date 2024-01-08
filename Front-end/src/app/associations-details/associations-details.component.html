@@ -28,29 +28,44 @@
 
 
 <table mat-table [dataSource]="minuteSource" class="mat-elevation-z8">
-
+  
     <ng-container matColumnDef="minutes : id">
         <th mat-header-cell *matHeaderCellDef> minutes : id </th>
-        <td mat-cell *matCellDef="let minutes"> {{minutes.id}}</td>
+        <td mat-cell *matCellDef="let minutes"> 
+          {{minutes.id}}
+        </td>
       </ng-container>
 
     <ng-container matColumnDef="content">
         <th mat-header-cell *matHeaderCellDef> content </th>
-        <td mat-cell *matCellDef="let minutes"> {{minutes.content}}</td>
+        <td mat-cell *matCellDef="let minutes"> 
+          {{minutes.content}}
+        </td>
     </ng-container>
     
     <ng-container matColumnDef="idVoters">
         <th mat-header-cell *matHeaderCellDef> idVoters </th>
         <td mat-cell *matCellDef="let minutes">
-          <span *ngFor="let user of minutes.idVoters; let last = last">
-            {{ minutes.idVoters }}{{ !last ? ', ' : '' }}
+          <span *ngFor="let id of minutes.idVoters; let last = last">
+            {{ id }}{{ !last ? ', ' : '' }}
           </span>
         </td>
     </ng-container>   
+
+    <!-- <ng-container matColumnDef="idVoters">
+        <th mat-header-cell *matHeaderCellDef> idVoters </th>
+        <td mat-cell *matCellDef="let minutes">
+          <span *ngFor="let user of getVoters(minutes.id) | async ; let last = last">
+            {{ user.id }}{{ !last ? ', ' : '' }}
+          </span>
+        </td>
+    </ng-container>   -->
       
     <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef> date </th>
-        <td mat-cell *matCellDef="let minutes"> {{minutes.date}}</td>
+        <td mat-cell *matCellDef="let minutes"> 
+          {{minutes.date}}
+        </td>
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="minuteColumns"></tr>

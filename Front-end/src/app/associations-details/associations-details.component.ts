@@ -14,7 +14,7 @@ export class AssociationsDetailsComponent {
   displayedColumns: string[] = ['id', 'Users', 'name',];
   dataSource : any[] = [];
   minuteColumns: string[] = ['minutes : id', 'content','idVoters','date'];
-  minuteSource : any[] = [];
+  minuteSource = [];
 
 
   constructor(private route: ActivatedRoute,private http: HttpClient) {
@@ -26,12 +26,19 @@ export class AssociationsDetailsComponent {
     request1.subscribe({ next : (response) =>{
       this.dataSource = [response.body];
     } });
-    const request2: Observable<any> = this.http.get('http://localhost:3000/minutes/' + this.associationId, { observe: 'response' });
-    request2.subscribe({ next : (response) => this.minuteSource = [response.body] });
+    const request2: Observable<any> = this.http.get('http://localhost:3000/minutes/association/' + this.associationId, { observe: 'response' });
+    request2.subscribe({ next : (response) => this.minuteSource = response.body });
   }
 
-  isCurrentUserInAssociation(Id: string): boolean {
-    return Id === this.associationId;
+  isAssociation(Id: number): boolean {
+    return Id.toString() === this.associationId.toString();
   }
+
+  // getVoters(Id: number): Observable<any> {
+  //   const request: Observable<any> = this.http.get('http://localhost:3000/minutes/' + Id + '/Voters', { observe: 'response' });
+  //   request.subscribe({ next : (response) => this.minuteSource = response.body });
+  //   console.log(request);
+  //   return request
+  // }
   
 }

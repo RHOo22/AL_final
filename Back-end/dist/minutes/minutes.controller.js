@@ -43,6 +43,12 @@ let MinutesController = class MinutesController {
             throw new common_1.HttpException('minute introuvable', common_1.HttpStatus.NOT_FOUND);
         return await UserVoters;
     }
+    async getAssoc(parameter) {
+        const UserVoters = this.service.getAssoc(+parameter.id);
+        if (UserVoters === undefined)
+            throw new common_1.HttpException('minute introuvable', common_1.HttpStatus.NOT_FOUND);
+        return await UserVoters;
+    }
     async put(parameter, input) {
         const minute = this.service.put(+parameter.id, input.content, input.idVoters, input.date, input.idAssociation);
         if (minute === undefined)
@@ -84,6 +90,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], MinutesController.prototype, "getVoters", null);
+__decorate([
+    (0, common_1.Get)('/association/:id'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], MinutesController.prototype, "getAssoc", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)()),

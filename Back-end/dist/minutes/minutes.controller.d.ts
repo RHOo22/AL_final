@@ -10,6 +10,7 @@ export declare class MinutesController {
     get(): Promise<Minute[]>;
     getid(parameter: any): Promise<Minute>;
     getVoters(parameter: any): Promise<User[]>;
+    getAssoc(parameter: any): Promise<Minute[]>;
     put(parameter: any, input: MinuteUpdate): Promise<Minute>;
     delete(parameter: any): Promise<boolean>;
 }

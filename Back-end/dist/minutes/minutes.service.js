@@ -17,18 +17,25 @@ const common_1 = require("@nestjs/common");
 const minute_entity_1 = require("./minute.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const users_service_1 = require("../users/users.service");
 let MinutesService = class MinutesService {
-    constructor(repository) {
+    constructor(repository, userservice) {
         this.repository = repository;
+        this.userservice = userservice;
     }
     async create(content, idVoters, date, idAssociation) {
         return this.repository.save(this.repository.create({ content, idVoters, date, idAssociation }));
     }
     async get() {
-        return this.repository.find();
+        console.log(await this.repository.find({ relations: ['idVoters'] }));
+        return await this.repository
+            .createQueryBuilder('minute')
+            .addSelect(['idVoters.id'])
+            .leftJoin('minute.idVoters', 'idVoters')
+            .getMany();
     }
     async getid(id) {
-        const minute = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });
+        const minute = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) }, relations: ['idVoters'] });
         if (minute === null) {
             return undefined;
         }
@@ -41,6 +48,13 @@ let MinutesService = class MinutesService {
             return undefined;
         }
         return (await this.userservice.get()).filter(user => minute.idVoters.indexOf(user.id) >= 0);
+    }
+    async getAssoc(id) {
+        const minute = await this.get();
+        if (minute == undefined) {
+            return undefined;
+        }
+        return minute.filter(minute => minute.idAssociation === id);
     }
     async put(id, content, idVoters, date, idAssociation) {
         const minute = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });
@@ -58,6 +72,7 @@ let MinutesService = class MinutesService {
                 minute.idAssociation = idAssociation;
             }
         }
+        console.log(minute);
         return minute;
     }
     async delete(id) {
@@ -68,6 +83,7 @@ exports.MinutesService = MinutesService;
 exports.MinutesService = MinutesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(minute_entity_1.Minute)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        users_service_1.UsersService])
 ], MinutesService);
 //# sourceMappingURL=minutes.service.js.map

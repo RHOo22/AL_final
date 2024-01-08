@@ -12,12 +12,13 @@ const minutes_controller_1 = require("./minutes.controller");
 const minutes_service_1 = require("./minutes.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const minute_entity_1 = require("./minute.entity");
+const users_module_1 = require("../users/users.module");
 let MinutesModule = class MinutesModule {
 };
 exports.MinutesModule = MinutesModule;
 exports.MinutesModule = MinutesModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([minute_entity_1.Minute])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([minute_entity_1.Minute]), users_module_1.UsersModule],
         controllers: [minutes_controller_1.MinutesController],
         providers: [minutes_service_1.MinutesService]
     })
