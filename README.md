@@ -18,7 +18,7 @@ Ce projet a pour but de nous apprendre les techniques et habitudes de base de la
 
 Pour lancer le projet web il faut ouvrir deux terminaux, se placer dans le Back-end et lancer la commande “npm run start” et dans le Front-end et lancer la commande “ng serve –open”. Cela lancera le back-end en local sur le port 3000 et le front-end sur le port 4200 et une fenêtre s’ouvrira dans le navigateur pour le front-end après avoir lancé la commande pour pouvoir utiliser ensuite notre application web.
 
-### Prérequis
+## Prérequis
 
 Il faut avoir node et nest pour pouvoir faire fonctionner le Back-end et Angular pour faire fonctionner le Front-end.
 
