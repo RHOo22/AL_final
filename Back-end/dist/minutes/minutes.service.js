@@ -28,11 +28,7 @@ let MinutesService = class MinutesService {
     }
     async get() {
         console.log(await this.repository.find({ relations: ['idVoters'] }));
-        return await this.repository
-            .createQueryBuilder('minute')
-            .addSelect(['idVoters.id'])
-            .leftJoin('minute.idVoters', 'idVoters')
-            .getMany();
+        return await this.repository.find({ relations: ['idVoters'] });
     }
     async getid(id) {
         const minute = await this.repository.findOne({ where: { id: (0, typeorm_2.Equal)(id) }, relations: ['idVoters'] });

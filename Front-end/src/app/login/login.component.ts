@@ -14,7 +14,7 @@ export class LoginComponent {
   loginToken: boolean = true;
   usernameControl = new FormControl('',[Validators.required]);
   passwordControl = new FormControl('',[Validators.required]);
-
+  
   constructor(
        private api: ApiHelperService,
        private tokenStorageService: TokenStorageService,

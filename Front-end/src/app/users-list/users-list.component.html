@@ -1,5 +1,13 @@
 <app-nav></app-nav>
 
+<form #idUserForm="ngForm" (ngSubmit)="Rechecher()">
+  <div class="group">
+      <label for="idUser"> Id User : </label>
+      <input type="text" name="idUser" id="idUser" [formControl]="idUserControl">
+  </div>
+  <button type="submit" [disabled]="!idUserForm.valid" > Recherche</button>
+</form>
+<div *ngIf="!idUserToken"> User introuvable</div> 
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 

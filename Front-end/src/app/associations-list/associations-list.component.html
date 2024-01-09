@@ -1,5 +1,13 @@
 <app-nav></app-nav>
 
+<form #idAssociationForm="ngForm" (ngSubmit)="Rechecher()">
+  <div class="group">
+      <label for="idAssociation"> Id Association : </label>
+      <input type="text" name="idAssociation" id="idAssociation" [formControl]="idAssociationControl">
+  </div>
+  <button type="submit" [disabled]="!idAssociationForm.valid" > Recherche</button>
+</form>
+<div *ngIf="!idAssociationToken"> Association introuvable</div> 
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
