@@ -1,0 +1,14 @@
+services:
+  Front-end:
+    image: front-end
+    ports: 
+      - "8000:80"
+    volumes: 
+      - ./Front-end:/app
+
+  Back-end:
+    image: back-end
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - ./Back-end:/app
